@@ -7,18 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F021AC1A198C6F1100697CE0 /* JJFPlaylistPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F021AC19198C6F1100697CE0 /* JJFPlaylistPlayer.m */; };
+		F044A25619AAE0E100D272C6 /* JJFAudioFileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A25519AAE0E100D272C6 /* JJFAudioFileWriter.m */; };
+		F044A25919AAE10E00D272C6 /* JJFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A25819AAE10E00D272C6 /* JJFAppDelegate.m */; };
+		F044A25D19AAE11D00D272C6 /* JJFHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A25B19AAE11D00D272C6 /* JJFHomeViewController.m */; };
+		F044A25E19AAE11D00D272C6 /* JJFHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F044A25C19AAE11D00D272C6 /* JJFHomeViewController.xib */; };
+		F044A26219AAE12700D272C6 /* JJFCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A26019AAE12700D272C6 /* JJFCreateViewController.m */; };
+		F044A26319AAE12700D272C6 /* JJFCreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F044A26119AAE12700D272C6 /* JJFCreateViewController.xib */; };
+		F044A26719AAE12F00D272C6 /* JJFJoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A26519AAE12F00D272C6 /* JJFJoinViewController.m */; };
+		F044A26819AAE12F00D272C6 /* JJFJoinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F044A26619AAE12F00D272C6 /* JJFJoinViewController.xib */; };
+		F044A26B19AAE13600D272C6 /* JJFMediaPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A26A19AAE13600D272C6 /* JJFMediaPickerController.m */; };
+		F044A26F19AAE13D00D272C6 /* JJFSessionHostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A26D19AAE13D00D272C6 /* JJFSessionHostTableViewController.m */; };
+		F044A27019AAE13D00D272C6 /* JJFSessionHostTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F044A26E19AAE13D00D272C6 /* JJFSessionHostTableViewController.xib */; };
+		F044A27419AAE14300D272C6 /* JJFSessionPeerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A27219AAE14300D272C6 /* JJFSessionPeerTableViewController.m */; };
+		F044A27519AAE14300D272C6 /* JJFSessionPeerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F044A27319AAE14300D272C6 /* JJFSessionPeerTableViewController.xib */; };
+		F044A27819AAE14D00D272C6 /* JJFSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A27719AAE14D00D272C6 /* JJFSessionManager.m */; };
+		F044A27B19AAE15300D272C6 /* JJFSharedPlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A27A19AAE15300D272C6 /* JJFSharedPlaylist.m */; };
+		F044A27E19AAE15D00D272C6 /* JJFPlaylistEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A27D19AAE15D00D272C6 /* JJFPlaylistEntry.m */; };
+		F044A28619AAE23100D272C6 /* forward-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F044A28219AAE23100D272C6 /* forward-white.png */; };
+		F044A28719AAE23100D272C6 /* HomeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = F044A28319AAE23100D272C6 /* HomeImage.png */; };
+		F044A28819AAE23100D272C6 /* pause-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F044A28419AAE23100D272C6 /* pause-white.png */; };
+		F044A28919AAE23100D272C6 /* play-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F044A28519AAE23100D272C6 /* play-white.png */; };
+		F08453A8199BF8DF00799D7F /* JJFPlaylistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F08453A7199BF8DF00799D7F /* JJFPlaylistCell.m */; };
+		F08453AB199BF90A00799D7F /* JJFPlaylistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F08453AA199BF90A00799D7F /* JJFPlaylistCell.xib */; };
 		F09D0FD219749338006B9B31 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D0FD119749338006B9B31 /* Foundation.framework */; };
 		F09D0FD419749338006B9B31 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D0FD319749338006B9B31 /* CoreGraphics.framework */; };
 		F09D0FD619749338006B9B31 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D0FD519749338006B9B31 /* UIKit.framework */; };
 		F09D0FDC19749338006B9B31 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F09D0FDA19749338006B9B31 /* InfoPlist.strings */; };
 		F09D0FDE19749338006B9B31 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F09D0FDD19749338006B9B31 /* main.m */; };
-		F09D0FE219749338006B9B31 /* JJFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F09D0FE119749338006B9B31 /* JJFAppDelegate.m */; };
-		F09D0FE419749338006B9B31 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F09D0FE319749338006B9B31 /* Images.xcassets */; };
-		F09D0FEB19749338006B9B31 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D0FEA19749338006B9B31 /* XCTest.framework */; };
 		F09D0FEC19749338006B9B31 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D0FD119749338006B9B31 /* Foundation.framework */; };
 		F09D0FED19749338006B9B31 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D0FD519749338006B9B31 /* UIKit.framework */; };
 		F09D0FF519749338006B9B31 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F09D0FF319749338006B9B31 /* InfoPlist.strings */; };
 		F09D0FF719749338006B9B31 /* PlayfulTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F09D0FF619749338006B9B31 /* PlayfulTests.m */; };
+		F09D102619749369006B9B31 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F09D100E19749369006B9B31 /* Images.xcassets */; };
+		F09D102A19749422006B9B31 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D102919749422006B9B31 /* MultipeerConnectivity.framework */; };
+		F09D102C1974942A006B9B31 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D102B1974942A006B9B31 /* AVFoundation.framework */; };
+		F09D102E19749436006B9B31 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D102D19749436006B9B31 /* AudioToolbox.framework */; };
+		F09D103019749450006B9B31 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D102F19749450006B9B31 /* MediaPlayer.framework */; };
+		F0CA9CDD1986B0D70003C687 /* JJFOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F0CA9CDC1986B0D70003C687 /* JJFOutputStream.m */; };
+		F0CA9CE01986B0E20003C687 /* JJFInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F0CA9CDF1986B0E20003C687 /* JJFInputStream.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +59,42 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F021AC18198C6F1100697CE0 /* JJFPlaylistPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFPlaylistPlayer.h; sourceTree = "<group>"; };
+		F021AC19198C6F1100697CE0 /* JJFPlaylistPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFPlaylistPlayer.m; sourceTree = "<group>"; };
+		F044A25419AAE0E100D272C6 /* JJFAudioFileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFAudioFileWriter.h; sourceTree = "<group>"; };
+		F044A25519AAE0E100D272C6 /* JJFAudioFileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFAudioFileWriter.m; sourceTree = "<group>"; };
+		F044A25719AAE10E00D272C6 /* JJFAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFAppDelegate.h; sourceTree = "<group>"; };
+		F044A25819AAE10E00D272C6 /* JJFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFAppDelegate.m; sourceTree = "<group>"; };
+		F044A25A19AAE11D00D272C6 /* JJFHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFHomeViewController.h; sourceTree = "<group>"; };
+		F044A25B19AAE11D00D272C6 /* JJFHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFHomeViewController.m; sourceTree = "<group>"; };
+		F044A25C19AAE11D00D272C6 /* JJFHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JJFHomeViewController.xib; sourceTree = "<group>"; };
+		F044A25F19AAE12700D272C6 /* JJFCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFCreateViewController.h; sourceTree = "<group>"; };
+		F044A26019AAE12700D272C6 /* JJFCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFCreateViewController.m; sourceTree = "<group>"; };
+		F044A26119AAE12700D272C6 /* JJFCreateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JJFCreateViewController.xib; sourceTree = "<group>"; };
+		F044A26419AAE12F00D272C6 /* JJFJoinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFJoinViewController.h; sourceTree = "<group>"; };
+		F044A26519AAE12F00D272C6 /* JJFJoinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFJoinViewController.m; sourceTree = "<group>"; };
+		F044A26619AAE12F00D272C6 /* JJFJoinViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JJFJoinViewController.xib; sourceTree = "<group>"; };
+		F044A26919AAE13600D272C6 /* JJFMediaPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFMediaPickerController.h; sourceTree = "<group>"; };
+		F044A26A19AAE13600D272C6 /* JJFMediaPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFMediaPickerController.m; sourceTree = "<group>"; };
+		F044A26C19AAE13D00D272C6 /* JJFSessionHostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFSessionHostTableViewController.h; sourceTree = "<group>"; };
+		F044A26D19AAE13D00D272C6 /* JJFSessionHostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFSessionHostTableViewController.m; sourceTree = "<group>"; };
+		F044A26E19AAE13D00D272C6 /* JJFSessionHostTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JJFSessionHostTableViewController.xib; sourceTree = "<group>"; };
+		F044A27119AAE14300D272C6 /* JJFSessionPeerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFSessionPeerTableViewController.h; sourceTree = "<group>"; };
+		F044A27219AAE14300D272C6 /* JJFSessionPeerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFSessionPeerTableViewController.m; sourceTree = "<group>"; };
+		F044A27319AAE14300D272C6 /* JJFSessionPeerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JJFSessionPeerTableViewController.xib; sourceTree = "<group>"; };
+		F044A27619AAE14D00D272C6 /* JJFSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFSessionManager.h; sourceTree = "<group>"; };
+		F044A27719AAE14D00D272C6 /* JJFSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFSessionManager.m; sourceTree = "<group>"; };
+		F044A27919AAE15300D272C6 /* JJFSharedPlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFSharedPlaylist.h; sourceTree = "<group>"; };
+		F044A27A19AAE15300D272C6 /* JJFSharedPlaylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFSharedPlaylist.m; sourceTree = "<group>"; };
+		F044A27C19AAE15D00D272C6 /* JJFPlaylistEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFPlaylistEntry.h; sourceTree = "<group>"; };
+		F044A27D19AAE15D00D272C6 /* JJFPlaylistEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFPlaylistEntry.m; sourceTree = "<group>"; };
+		F044A28219AAE23100D272C6 /* forward-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forward-white.png"; sourceTree = "<group>"; };
+		F044A28319AAE23100D272C6 /* HomeImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HomeImage.png; sourceTree = "<group>"; };
+		F044A28419AAE23100D272C6 /* pause-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause-white.png"; sourceTree = "<group>"; };
+		F044A28519AAE23100D272C6 /* play-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-white.png"; sourceTree = "<group>"; };
+		F08453A6199BF8DF00799D7F /* JJFPlaylistCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFPlaylistCell.h; sourceTree = "<group>"; };
+		F08453A7199BF8DF00799D7F /* JJFPlaylistCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFPlaylistCell.m; sourceTree = "<group>"; };
+		F08453AA199BF90A00799D7F /* JJFPlaylistCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JJFPlaylistCell.xib; sourceTree = "<group>"; };
 		F09D0FCE19749338006B9B31 /* Playful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Playful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09D0FD119749338006B9B31 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F09D0FD319749338006B9B31 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -40,14 +103,20 @@
 		F09D0FDB19749338006B9B31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F09D0FDD19749338006B9B31 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F09D0FDF19749338006B9B31 /* Playful-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Playful-Prefix.pch"; sourceTree = "<group>"; };
-		F09D0FE019749338006B9B31 /* JJFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJFAppDelegate.h; sourceTree = "<group>"; };
-		F09D0FE119749338006B9B31 /* JJFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJFAppDelegate.m; sourceTree = "<group>"; };
-		F09D0FE319749338006B9B31 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F09D0FE919749338006B9B31 /* PlayfulTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayfulTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F09D0FEA19749338006B9B31 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		F09D0FF219749338006B9B31 /* PlayfulTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayfulTests-Info.plist"; sourceTree = "<group>"; };
 		F09D0FF419749338006B9B31 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F09D0FF619749338006B9B31 /* PlayfulTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayfulTests.m; sourceTree = "<group>"; };
+		F09D100E19749369006B9B31 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
+		F09D102919749422006B9B31 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
+		F09D102B1974942A006B9B31 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		F09D102D19749436006B9B31 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F09D102F19749450006B9B31 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		F09D103D19749830006B9B31 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		F0CA9CDB1986B0D70003C687 /* JJFOutputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFOutputStream.h; sourceTree = "<group>"; };
+		F0CA9CDC1986B0D70003C687 /* JJFOutputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFOutputStream.m; sourceTree = "<group>"; };
+		F0CA9CDE1986B0E20003C687 /* JJFInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFInputStream.h; sourceTree = "<group>"; };
+		F0CA9CDF1986B0E20003C687 /* JJFInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFInputStream.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +124,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F09D103019749450006B9B31 /* MediaPlayer.framework in Frameworks */,
+				F09D102E19749436006B9B31 /* AudioToolbox.framework in Frameworks */,
+				F09D102C1974942A006B9B31 /* AVFoundation.framework in Frameworks */,
+				F09D102A19749422006B9B31 /* MultipeerConnectivity.framework in Frameworks */,
 				F09D0FD419749338006B9B31 /* CoreGraphics.framework in Frameworks */,
 				F09D0FD619749338006B9B31 /* UIKit.framework in Frameworks */,
 				F09D0FD219749338006B9B31 /* Foundation.framework in Frameworks */,
@@ -65,7 +138,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F09D0FEB19749338006B9B31 /* XCTest.framework in Frameworks */,
 				F09D0FED19749338006B9B31 /* UIKit.framework in Frameworks */,
 				F09D0FEC19749338006B9B31 /* Foundation.framework in Frameworks */,
 			);
@@ -74,6 +146,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F044A28119AAE23100D272C6 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F044A28219AAE23100D272C6 /* forward-white.png */,
+				F044A28319AAE23100D272C6 /* HomeImage.png */,
+				F044A28419AAE23100D272C6 /* pause-white.png */,
+				F044A28519AAE23100D272C6 /* play-white.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		F08453A9199BF8E400799D7F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F08453A6199BF8DF00799D7F /* JJFPlaylistCell.h */,
+				F08453A7199BF8DF00799D7F /* JJFPlaylistCell.m */,
+				F08453AA199BF90A00799D7F /* JJFPlaylistCell.xib */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		F09D0FC519749338006B9B31 = {
 			isa = PBXGroup;
 			children = (
@@ -96,10 +189,14 @@
 		F09D0FD019749338006B9B31 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F09D103D19749830006B9B31 /* XCTest.framework */,
+				F09D102F19749450006B9B31 /* MediaPlayer.framework */,
+				F09D102D19749436006B9B31 /* AudioToolbox.framework */,
+				F09D102B1974942A006B9B31 /* AVFoundation.framework */,
+				F09D102919749422006B9B31 /* MultipeerConnectivity.framework */,
 				F09D0FD119749338006B9B31 /* Foundation.framework */,
 				F09D0FD319749338006B9B31 /* CoreGraphics.framework */,
 				F09D0FD519749338006B9B31 /* UIKit.framework */,
-				F09D0FEA19749338006B9B31 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -107,9 +204,11 @@
 		F09D0FD719749338006B9B31 /* Playful */ = {
 			isa = PBXGroup;
 			children = (
-				F09D0FE019749338006B9B31 /* JJFAppDelegate.h */,
-				F09D0FE119749338006B9B31 /* JJFAppDelegate.m */,
-				F09D0FE319749338006B9B31 /* Images.xcassets */,
+				F09D10311974947A006B9B31 /* App Delegate */,
+				F09D10321974948A006B9B31 /* View Controllers */,
+				F09D103319749496006B9B31 /* Session/Playlist */,
+				F09D100E19749369006B9B31 /* Images.xcassets */,
+				F044A28119AAE23100D272C6 /* Images */,
 				F09D0FD819749338006B9B31 /* Supporting Files */,
 			);
 			path = Playful;
@@ -142,6 +241,181 @@
 				F09D0FF319749338006B9B31 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F09D10311974947A006B9B31 /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				F044A25719AAE10E00D272C6 /* JJFAppDelegate.h */,
+				F044A25819AAE10E00D272C6 /* JJFAppDelegate.m */,
+			);
+			name = "App Delegate";
+			sourceTree = "<group>";
+		};
+		F09D10321974948A006B9B31 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F09D1034197494A9006B9B31 /* Home */,
+				F09D1035197494B4006B9B31 /* Create */,
+				F09D1036197494BD006B9B31 /* Join */,
+				F09D1037197494C2006B9B31 /* MediaPicker */,
+				F09D1038197494CB006B9B31 /* Session TableView */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F09D103319749496006B9B31 /* Session/Playlist */ = {
+			isa = PBXGroup;
+			children = (
+				F0CA9CD71986AF630003C687 /* Manager */,
+				F0A6C3561993F19F00C28379 /* Player */,
+			);
+			name = Session/Playlist;
+			sourceTree = "<group>";
+		};
+		F09D1034197494A9006B9B31 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F044A25A19AAE11D00D272C6 /* JJFHomeViewController.h */,
+				F044A25B19AAE11D00D272C6 /* JJFHomeViewController.m */,
+				F044A25C19AAE11D00D272C6 /* JJFHomeViewController.xib */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		F09D1035197494B4006B9B31 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				F044A25F19AAE12700D272C6 /* JJFCreateViewController.h */,
+				F044A26019AAE12700D272C6 /* JJFCreateViewController.m */,
+				F044A26119AAE12700D272C6 /* JJFCreateViewController.xib */,
+			);
+			name = Create;
+			sourceTree = "<group>";
+		};
+		F09D1036197494BD006B9B31 /* Join */ = {
+			isa = PBXGroup;
+			children = (
+				F044A26419AAE12F00D272C6 /* JJFJoinViewController.h */,
+				F044A26519AAE12F00D272C6 /* JJFJoinViewController.m */,
+				F044A26619AAE12F00D272C6 /* JJFJoinViewController.xib */,
+			);
+			name = Join;
+			sourceTree = "<group>";
+		};
+		F09D1037197494C2006B9B31 /* MediaPicker */ = {
+			isa = PBXGroup;
+			children = (
+				F044A26919AAE13600D272C6 /* JJFMediaPickerController.h */,
+				F044A26A19AAE13600D272C6 /* JJFMediaPickerController.m */,
+			);
+			name = MediaPicker;
+			sourceTree = "<group>";
+		};
+		F09D1038197494CB006B9B31 /* Session TableView */ = {
+			isa = PBXGroup;
+			children = (
+				F0CA9CD41986AF460003C687 /* Host */,
+				F0CA9CD51986AF4C0003C687 /* Peer */,
+				F08453A9199BF8E400799D7F /* Cell */,
+			);
+			name = "Session TableView";
+			sourceTree = "<group>";
+		};
+		F0A6C3561993F19F00C28379 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				F021AC18198C6F1100697CE0 /* JJFPlaylistPlayer.h */,
+				F021AC19198C6F1100697CE0 /* JJFPlaylistPlayer.m */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		F0A6C35719940DA400C28379 /* Output */ = {
+			isa = PBXGroup;
+			children = (
+				F0CA9CDB1986B0D70003C687 /* JJFOutputStream.h */,
+				F0CA9CDC1986B0D70003C687 /* JJFOutputStream.m */,
+			);
+			name = Output;
+			sourceTree = "<group>";
+		};
+		F0A6C35819940DAA00C28379 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				F0CA9CDE1986B0E20003C687 /* JJFInputStream.h */,
+				F0CA9CDF1986B0E20003C687 /* JJFInputStream.m */,
+				F0A6C35919940DAF00C28379 /* File Writer */,
+			);
+			name = Input;
+			sourceTree = "<group>";
+		};
+		F0A6C35919940DAF00C28379 /* File Writer */ = {
+			isa = PBXGroup;
+			children = (
+				F044A25419AAE0E100D272C6 /* JJFAudioFileWriter.h */,
+				F044A25519AAE0E100D272C6 /* JJFAudioFileWriter.m */,
+			);
+			name = "File Writer";
+			sourceTree = "<group>";
+		};
+		F0CA9CD41986AF460003C687 /* Host */ = {
+			isa = PBXGroup;
+			children = (
+				F044A26C19AAE13D00D272C6 /* JJFSessionHostTableViewController.h */,
+				F044A26D19AAE13D00D272C6 /* JJFSessionHostTableViewController.m */,
+				F044A26E19AAE13D00D272C6 /* JJFSessionHostTableViewController.xib */,
+			);
+			name = Host;
+			sourceTree = "<group>";
+		};
+		F0CA9CD51986AF4C0003C687 /* Peer */ = {
+			isa = PBXGroup;
+			children = (
+				F044A27119AAE14300D272C6 /* JJFSessionPeerTableViewController.h */,
+				F044A27219AAE14300D272C6 /* JJFSessionPeerTableViewController.m */,
+				F044A27319AAE14300D272C6 /* JJFSessionPeerTableViewController.xib */,
+			);
+			name = Peer;
+			sourceTree = "<group>";
+		};
+		F0CA9CD61986AF5E0003C687 /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				F044A27C19AAE15D00D272C6 /* JJFPlaylistEntry.h */,
+				F044A27D19AAE15D00D272C6 /* JJFPlaylistEntry.m */,
+			);
+			name = Entry;
+			sourceTree = "<group>";
+		};
+		F0CA9CD71986AF630003C687 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				F044A27619AAE14D00D272C6 /* JJFSessionManager.h */,
+				F044A27719AAE14D00D272C6 /* JJFSessionManager.m */,
+				F0CA9CDA1986B0A60003C687 /* Audio Streamer */,
+				F0CA9CD91986AF950003C687 /* Playlist */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		F0CA9CD91986AF950003C687 /* Playlist */ = {
+			isa = PBXGroup;
+			children = (
+				F044A27919AAE15300D272C6 /* JJFSharedPlaylist.h */,
+				F044A27A19AAE15300D272C6 /* JJFSharedPlaylist.m */,
+				F0CA9CD61986AF5E0003C687 /* Entry */,
+			);
+			name = Playlist;
+			sourceTree = "<group>";
+		};
+		F0CA9CDA1986B0A60003C687 /* Audio Streamer */ = {
+			isa = PBXGroup;
+			children = (
+				F0A6C35719940DA400C28379 /* Output */,
+				F0A6C35819940DAA00C28379 /* Input */,
+			);
+			name = "Audio Streamer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,8 +494,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F09D102619749369006B9B31 /* Images.xcassets in Resources */,
+				F044A28819AAE23100D272C6 /* pause-white.png in Resources */,
+				F044A26819AAE12F00D272C6 /* JJFJoinViewController.xib in Resources */,
+				F044A28719AAE23100D272C6 /* HomeImage.png in Resources */,
+				F044A27519AAE14300D272C6 /* JJFSessionPeerTableViewController.xib in Resources */,
+				F044A28919AAE23100D272C6 /* play-white.png in Resources */,
+				F044A27019AAE13D00D272C6 /* JJFSessionHostTableViewController.xib in Resources */,
+				F08453AB199BF90A00799D7F /* JJFPlaylistCell.xib in Resources */,
 				F09D0FDC19749338006B9B31 /* InfoPlist.strings in Resources */,
-				F09D0FE419749338006B9B31 /* Images.xcassets in Resources */,
+				F044A28619AAE23100D272C6 /* forward-white.png in Resources */,
+				F044A25E19AAE11D00D272C6 /* JJFHomeViewController.xib in Resources */,
+				F044A26319AAE12700D272C6 /* JJFCreateViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,8 +524,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F044A27419AAE14300D272C6 /* JJFSessionPeerTableViewController.m in Sources */,
+				F044A27E19AAE15D00D272C6 /* JJFPlaylistEntry.m in Sources */,
+				F044A25D19AAE11D00D272C6 /* JJFHomeViewController.m in Sources */,
+				F044A26219AAE12700D272C6 /* JJFCreateViewController.m in Sources */,
+				F0CA9CE01986B0E20003C687 /* JJFInputStream.m in Sources */,
+				F044A26F19AAE13D00D272C6 /* JJFSessionHostTableViewController.m in Sources */,
+				F044A27B19AAE15300D272C6 /* JJFSharedPlaylist.m in Sources */,
+				F08453A8199BF8DF00799D7F /* JJFPlaylistCell.m in Sources */,
+				F044A27819AAE14D00D272C6 /* JJFSessionManager.m in Sources */,
+				F044A25619AAE0E100D272C6 /* JJFAudioFileWriter.m in Sources */,
+				F044A26719AAE12F00D272C6 /* JJFJoinViewController.m in Sources */,
 				F09D0FDE19749338006B9B31 /* main.m in Sources */,
-				F09D0FE219749338006B9B31 /* JJFAppDelegate.m in Sources */,
+				F0CA9CDD1986B0D70003C687 /* JJFOutputStream.m in Sources */,
+				F021AC1A198C6F1100697CE0 /* JJFPlaylistPlayer.m in Sources */,
+				F044A26B19AAE13600D272C6 /* JJFMediaPickerController.m in Sources */,
+				F044A25919AAE10E00D272C6 /* JJFAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,7 +615,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 			};
 			name = Debug;
 		};
@@ -348,7 +646,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -358,10 +656,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Playful/Playful-Prefix.pch";
 				INFOPLIST_FILE = "Playful/Playful-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos7.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -371,10 +676,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Playful/Playful-Prefix.pch";
 				INFOPLIST_FILE = "Playful/Playful-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos7.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -438,6 +750,7 @@
 				F09D0FFC19749338006B9B31 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F09D0FFD19749338006B9B31 /* Build configuration list for PBXNativeTarget "PlayfulTests" */ = {
 			isa = XCConfigurationList;
@@ -446,6 +759,7 @@
 				F09D0FFF19749338006B9B31 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

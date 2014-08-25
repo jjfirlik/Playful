@@ -1,12 +1,15 @@
 //
 //  JJFAppDelegate.m
-//  Playful
+//  PlayfulTest
 //
-//  Created by Jackson Firlik on 7/14/14.
+//  Created by Jackson Firlik on 7/6/14.
 //  Copyright (c) 2014 Jackson Firlik. All rights reserved.
 //
 
 #import "JJFAppDelegate.h"
+#import "JJFHomeViewController.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
 @implementation JJFAppDelegate
 
@@ -14,6 +17,33 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    [[JJFSessionManager sharedManager] setupSession];
+    
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    
+    NSError *setCategoryError = nil;
+    BOOL success = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    if (!success) { /* handle the error condition */ }
+    
+    NSError *activationError = nil;
+    success = [audioSession setActive:YES error:&activationError];
+    
+    [UIApplication sharedApplication].idleTimerDisabled=YES;
+
+    JJFHomeViewController *homeViewController = [[JJFHomeViewController alloc] init];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
+    navController.navigationBar.hidden = YES;
+    
+    [navController.navigationBar setBackgroundImage:[UIImage new]
+                                      forBarMetrics:UIBarMetricsDefault];
+    
+    [navController.navigationBar setShadowImage:[UIImage new]];
+    [navController.navigationBar setTranslucent:YES];
+    
+    self.window.rootViewController = navController;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -29,6 +59,20 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+
+    NSFileManager *fileMgr = [[NSFileManager alloc] init];
+    NSError *error = nil;
+    
+    NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [dirPaths objectAtIndex:0];
+    
+    
+    NSArray *directoryContents = [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:&error];
+    
+    for (NSString *path in directoryContents) {
+        NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:path];
+        [fileMgr removeItemAtPath:fullPath error:&error];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
