@@ -12,6 +12,6 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "JJFSessionManager.h"
 
-@interface JJFSessionHostTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MPMediaPickerControllerDelegate>
+@interface JJFSessionHostTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MPMediaPickerControllerDelegate, UIScrollViewDelegate>
 
 @end

@@ -12,9 +12,11 @@
 #import "JJFAppDelegate.h"
 
 @interface JJFHomeViewController ()
+
 @property (weak, nonatomic) IBOutlet UIImageView *homeImage;
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
 @property (weak, nonatomic) IBOutlet UIButton *joinButton;
+
 - (IBAction)createSession:(id)sender;
 - (IBAction)joinSession:(id)sender;
 
@@ -39,6 +41,11 @@
     
     self.navigationController.navigationBar.hidden = YES;
     
+    UIColor *offWhiteColor = [[UIColor alloc] initWithRed:224.0/255.0 green:219.0/255.0 blue:211.0/255.0 alpha:1.0];
+    [self.navigationController.navigationBar setTintColor:offWhiteColor];
+    
+
+    
     //Hide the status bar
     //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
@@ -47,7 +54,6 @@
 {
     self.navigationController.navigationBarHidden = YES;
 }
-
 
 /*- (BOOL)prefersStatusBarHidden {
  return YES;

@@ -19,7 +19,7 @@
         self.songTitle = [item valueForProperty:MPMediaItemPropertyTitle];
         
         MPMediaItemArtwork *art = [item valueForProperty:MPMediaItemPropertyArtwork];
-        self.albumImage = [art imageWithSize:CGSizeMake(50.0, 50.0)];
+        self.albumImage = [art imageWithSize:CGSizeMake(320.0, 320.0)];
         
         //**Will have to change this to reflect local vs. streamed file**//
         self.songURL = [item valueForProperty:MPMediaItemPropertyAssetURL];

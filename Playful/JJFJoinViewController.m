@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *peerCountLabel;
 @property (weak, nonatomic) IBOutlet UITextView *peerNameTextView;
 @property (weak, nonatomic) IBOutlet UIButton *joinButton;
+
 - (IBAction)join:(id)sender;
 
 @end
@@ -72,6 +73,13 @@
     
     self.peerCountLabel.text = peerCountLabelText;
     self.peerNameTextView.text = peerNameLabelText;
+    
+    UIColor *deepTurquoise = [UIColor colorWithRed:55.0/255.0 green:85.0/255.0 blue:99.0/255.0 alpha:1.0];
+    
+    [UIView animateWithDuration:2.0
+                     animations:^{
+                         self.joinButton.backgroundColor = deepTurquoise;
+                     }];
     
 }
 

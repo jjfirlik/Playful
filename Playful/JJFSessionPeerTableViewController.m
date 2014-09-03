@@ -14,6 +14,7 @@
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *playlistLabel;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
 
 //@property (strong, nonatomic) JJFOutputStream *outputStream;
 
@@ -30,9 +31,18 @@
     [self.view setAutoresizesSubviews:NO];
     
     self.tableView.delegate = self;
-    self.tableView.rowHeight = 65.0;
+    self.tableView.rowHeight = 100.0;
     self.tableView.dataSource = self;
     
+    [self.headerView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.headerView.layer setShadowOpacity:1.0];
+    [self.headerView.layer setShadowRadius:10.0];
+    [self.headerView.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
+    
+    [self.headerView.layer setZPosition:2.0];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -90,35 +100,24 @@
     return [JJFSessionManager sharedManager];
 }
 
-/*
-- (void)finishedStreamingWithNotification:(NSNotification *)note
+#pragma mark - Scroll View Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    JJFSharedPlaylist *sharedPlaylist = [JJFSessionManager sharedManager].sharedPlaylist;
+    CGFloat relativeScrollOffset = scrollView.contentOffset.y / self.tableView.frame.size.height;
     
-    NSDictionary *dict = [note userInfo];
-    
-    JJFPlaylistEntry *entry = [dict objectForKey:@"entry"];
-    
-    NSUInteger index = [sharedPlaylist.playlist indexOfObject:entry];
-    
-    NSLog(@"INDEX %lu", index);
-    
-    NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
-    
-    JJFPlaylistCell *cell = (JJFPlaylistCell *)[self.tableView cellForRowAtIndexPath:path];
+    NSLog(@"ScrollViewOffset %f", relativeScrollOffset);
 
-    [self performSelector:@selector(stopAnimating:) onThread:[NSThread mainThread] withObject:cell waitUntilDone:NO];
+    CGFloat backgroundOffset = relativeScrollOffset * self.tableView.rowHeight;
+    for (int i = 0; i <self.sessionManager.sharedPlaylist.playlist.count; i++) {
+        JJFPlaylistCell *cell = (JJFPlaylistCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        CGRect frame = CGRectMake(cell.backgroundView.frame.origin.x,
+                                  backgroundOffset,
+                                  cell.backgroundView.frame.size.width,
+                                  cell.backgroundView.frame.size.height);
+        cell.backgroundView.frame = frame;
+        
+    }
 }
-
-- (void)stopAnimating:(JJFPlaylistCell *)cell
-{
-    [cell.activityIndicator stopAnimating];
-    [cell setActivityIndicator:nil];
-    
-    NSLog(@"%@ set to NIL", cell.songLabel.text);
-
-    
-}*/
 
 #pragma mark - Media Picker
 
@@ -190,14 +189,28 @@
     
     JJFPlaylistEntry *item = [self.sessionManager.sharedPlaylist.playlist objectAtIndex:indexPath.row];
     
-    cell.artistLabel.text = item.artistName;
-    cell.albumImage.image = item.albumImage;
-    cell.songLabel.text = item.songTitle;
+    UIColor *deepTurquoise = [UIColor colorWithRed:55.0/255.0 green:85.0/255.0 blue:99.0/255.0 alpha:1.0];
+    
+    NSMutableAttributedString *artistString = [[NSMutableAttributedString alloc] initWithString:item.artistName];
+    
+    [artistString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, artistString.length)];
+    
+    NSMutableAttributedString *songString = [[NSMutableAttributedString alloc] initWithString:item.songTitle];
+    
+    [songString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, songString.length)];
+    
+    cell.artistLabel.attributedText = artistString;
+    cell.backgroundView = [[UIImageView alloc] initWithImage:item.albumImage];
+    [cell.backgroundView setContentMode:UIViewContentModeCenter];
+    cell.songLabel.attributedText = songString;
     
     if (item.isStreaming)
     {
         [cell.activityIndicator startAnimating];
     }
+    
+    [cell layoutSubviews];
+
     
     return cell;
 }

@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
 - (IBAction)togglePlayback:(UIButton *)button;
 - (IBAction)nextSong:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
 
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
@@ -37,10 +38,19 @@
     [super viewDidLoad];
     
     [self.view setAutoresizesSubviews:NO];
-    
+        
     self.tableView.delegate = self;
-    self.tableView.rowHeight = 65.0;
+    self.tableView.rowHeight = 100.0;
     self.tableView.dataSource = self;
+    
+    [self.headerView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.headerView.layer setShadowOpacity:1.0];
+    [self.headerView.layer setShadowRadius:10.0];
+    [self.headerView.layer setShadowOffset:CGSizeMake(0.0, 0.0)];
+    
+    [self.headerView.layer setZPosition:2.0];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.inputStream = [[JJFInputStream alloc] initWithInputStream:nil];
     self.entriesDoneStreaming = [NSMutableArray array];
@@ -66,10 +76,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(songFinishedPlayingWithNotification:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     
     NSLog(@"color is %@", self.playlistLabel.textColor);
-    
+
     //Hide the status bar
     //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -124,58 +135,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Old Playlist Player Logic
-/*
-- (void)addLocalSongWithNotification:(NSNotification *)note
-{
-    NSDictionary *dict = [note userInfo];
-    JJFPlaylistEntry *entry = [dict objectForKey:@"entry"];
-    
-    if (!self.player)
-    {
-        self.player = [[JJFPlaylistPlayer alloc] init];
-        [self.player addEntry:entry];
-    }
-}
-
-- (void)finishedWritingFileWithNotification:(NSNotification *)note
-{
-    JJFSharedPlaylist *sharedPlaylist = [self.sessionManager sharedPlaylist];
-    
-    [self beginPlayingWithNotification:note];
-    
-    NSDictionary *dict = [note userInfo];
-    
-    JJFPlaylistEntry *entry = [dict objectForKey:@"entry"];
-    JJFPlaylistEntry *localEntry = [sharedPlaylist entryForUUID:entry.uuid];
-    
-    NSUInteger index = [sharedPlaylist.playlist indexOfObject:localEntry];
-    
-    NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
-    
-    JJFPlaylistCell *cell = (JJFPlaylistCell *)[self.tableView cellForRowAtIndexPath:path];
-    
-    [cell.activityIndicator stopAnimating];
-    [cell setActivityIndicator:nil];
-    
-}
-
-- (void)beginPlayingWithNotification:(NSNotification *)note
-{
-    if (!self.player)
-    {
-        self.player = [[JJFPlaylistPlayer alloc] initWithPlaylist:self.sessionManager.sharedPlaylist];
-        [self.player play];
-    }
-    
-    else
-    {
-        JJFPlaylistEntry *entry = [[note userInfo] objectForKey:@"entry"];
-        [self.player addEntry:entry];
-    }
-}
-*/
-
 #pragma mark - Playlist Player Logic
 
 - (void)addEntryToQueueWithNotification:(NSNotification *)note
@@ -217,6 +176,7 @@
     mediaPicker.delegate = self;
     
     [self presentViewController:mediaPicker animated:YES completion:nil];
+    
     
 }
 
@@ -276,7 +236,26 @@
     
 }
 
-#pragma mark - Table view data source
+#pragma mark - Scroll View Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat relativeScrollOffset = scrollView.contentOffset.y / self.tableView.frame.size.height;
+
+    NSLog(@"ScrollViewOffset %f", relativeScrollOffset);
+    
+    CGFloat backgroundOffset = relativeScrollOffset * self.tableView.rowHeight;
+    for (int i = 0; i <self.sessionManager.sharedPlaylist.playlist.count; i++) {
+        JJFPlaylistCell *cell = (JJFPlaylistCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        CGRect frame = CGRectMake(cell.backgroundView.frame.origin.x,
+                                  backgroundOffset,
+                                  cell.backgroundView.frame.size.width,
+                                  cell.backgroundView.frame.size.height);
+        cell.backgroundView.frame = frame;
+        
+    }
+}
+
+#pragma mark - Table view Sata Source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -309,9 +288,33 @@
     
     JJFPlaylistEntry *item = [self.sessionManager.sharedPlaylist.playlist objectAtIndex:indexPath.row];
     
-    cell.artistLabel.text = item.artistName;
-    cell.albumImage.image = item.albumImage;
-    cell.songLabel.text = item.songTitle;
+    UIColor *deepTurquoise = [UIColor colorWithRed:55.0/255.0 green:85.0/255.0 blue:99.0/255.0 alpha:1.0];
+    
+    NSMutableAttributedString *artistString = [[NSMutableAttributedString alloc] initWithString:item.artistName];
+    
+    [artistString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, artistString.length)];
+    
+    NSMutableAttributedString *songString = [[NSMutableAttributedString alloc] initWithString:item.songTitle];
+    
+    [songString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, songString.length)];
+    
+    cell.artistLabel.attributedText = artistString;
+    
+    cell.backgroundView = [[UIImageView alloc] initWithImage:item.albumImage];
+    [cell.backgroundView setContentMode:UIViewContentModeCenter];
+    cell.songLabel.attributedText = songString;
+    
+    //CGFloat width = [cell.artistLabel.text sizeWithAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:27.0]}].width;
+    
+
+    
+    [cell layoutSubviews];
+
+    
+    /*cell.artistLabel.frame = CGRectMake(cell.artistLabel.frame.origin.x,
+                                        cell.artistLabel.frame.origin.y,
+                                        width,
+                                        cell.artistLabel.frame.size.height);*/
     
     if (item.isStreaming)
     {

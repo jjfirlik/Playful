@@ -62,6 +62,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
+    
+    [self.connectButton setHidden:NO];
 }
 
 - (void)updatePeerDisplays:(NSNotification *)notification
@@ -117,10 +119,20 @@
 {
     //[[self.appDelegate sessionManager] browseForPeers:NO];
     //[[self.appDelegate sessionManager] inviteAllPeers];
+    UIColor *deepTurquoise = [UIColor colorWithRed:55.0/255.0 green:85.0/255.0 blue:99.0/255.0 alpha:1.0];
     
     JJFSessionHostTableViewController *sessionViewController = [[JJFSessionHostTableViewController alloc] init];
     
-    [self.navigationController pushViewController:sessionViewController animated:YES];
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         [self.view setBackgroundColor:deepTurquoise];
+                         [self.connectButton setFrame:CGRectMake(0.0, 568.0, 320.0, 70.0)];
+                     }
+                     completion:^(BOOL finished){
+                         [self.connectButton setHidden:YES];
+                         [self.navigationController pushViewController:sessionViewController animated:YES];
+                         
+                     }];
 }
 
 
