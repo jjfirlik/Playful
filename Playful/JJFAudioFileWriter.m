@@ -54,6 +54,7 @@ void AudioFileStreamPacketsListener(void *inClientData,
 @implementation JJFAudioFileWriter
 
 
+
 - (instancetype)initWithEntry:(JJFPlaylistEntry *)entry
 {
     self = [super init];

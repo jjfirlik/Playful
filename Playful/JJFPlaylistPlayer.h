@@ -12,10 +12,7 @@
 
 @interface JJFPlaylistPlayer : NSObject
 
-- (instancetype)initWithPlaylist:(JJFSharedPlaylist *)playlist;
-
 - (void)addEntry:(JJFPlaylistEntry *)entry;
-
 
 - (void)play;
 - (void)pause;

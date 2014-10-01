@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F021AC1A198C6F1100697CE0 /* JJFPlaylistPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F021AC19198C6F1100697CE0 /* JJFPlaylistPlayer.m */; };
-		F044A25619AAE0E100D272C6 /* JJFAudioFileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A25519AAE0E100D272C6 /* JJFAudioFileWriter.m */; };
+		F02310FC19D26311006B30BB /* JJFSharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = F02310FB19D26311006B30BB /* JJFSharingController.m */; };
+		F024965719BBFF0700ED5622 /* JJFAudioFileConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F024965619BBFF0700ED5622 /* JJFAudioFileConverter.m */; };
 		F044A25919AAE10E00D272C6 /* JJFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A25819AAE10E00D272C6 /* JJFAppDelegate.m */; };
 		F044A25D19AAE11D00D272C6 /* JJFHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F044A25B19AAE11D00D272C6 /* JJFHomeViewController.m */; };
 		F044A25E19AAE11D00D272C6 /* JJFHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F044A25C19AAE11D00D272C6 /* JJFHomeViewController.xib */; };
@@ -44,8 +45,6 @@
 		F09D102C1974942A006B9B31 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D102B1974942A006B9B31 /* AVFoundation.framework */; };
 		F09D102E19749436006B9B31 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D102D19749436006B9B31 /* AudioToolbox.framework */; };
 		F09D103019749450006B9B31 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09D102F19749450006B9B31 /* MediaPlayer.framework */; };
-		F0CA9CDD1986B0D70003C687 /* JJFOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F0CA9CDC1986B0D70003C687 /* JJFOutputStream.m */; };
-		F0CA9CE01986B0E20003C687 /* JJFInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F0CA9CDF1986B0E20003C687 /* JJFInputStream.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +60,10 @@
 /* Begin PBXFileReference section */
 		F021AC18198C6F1100697CE0 /* JJFPlaylistPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFPlaylistPlayer.h; sourceTree = "<group>"; };
 		F021AC19198C6F1100697CE0 /* JJFPlaylistPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFPlaylistPlayer.m; sourceTree = "<group>"; };
-		F044A25419AAE0E100D272C6 /* JJFAudioFileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFAudioFileWriter.h; sourceTree = "<group>"; };
-		F044A25519AAE0E100D272C6 /* JJFAudioFileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFAudioFileWriter.m; sourceTree = "<group>"; };
+		F02310FA19D26311006B30BB /* JJFSharingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFSharingController.h; sourceTree = "<group>"; };
+		F02310FB19D26311006B30BB /* JJFSharingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFSharingController.m; sourceTree = "<group>"; };
+		F024965519BBFF0700ED5622 /* JJFAudioFileConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFAudioFileConverter.h; sourceTree = "<group>"; };
+		F024965619BBFF0700ED5622 /* JJFAudioFileConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFAudioFileConverter.m; sourceTree = "<group>"; };
 		F044A25719AAE10E00D272C6 /* JJFAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFAppDelegate.h; sourceTree = "<group>"; };
 		F044A25819AAE10E00D272C6 /* JJFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFAppDelegate.m; sourceTree = "<group>"; };
 		F044A25A19AAE11D00D272C6 /* JJFHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFHomeViewController.h; sourceTree = "<group>"; };
@@ -113,10 +114,6 @@
 		F09D102D19749436006B9B31 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F09D102F19749450006B9B31 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		F09D103D19749830006B9B31 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		F0CA9CDB1986B0D70003C687 /* JJFOutputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFOutputStream.h; sourceTree = "<group>"; };
-		F0CA9CDC1986B0D70003C687 /* JJFOutputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFOutputStream.m; sourceTree = "<group>"; };
-		F0CA9CDE1986B0E20003C687 /* JJFInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJFInputStream.h; sourceTree = "<group>"; };
-		F0CA9CDF1986B0E20003C687 /* JJFInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJFInputStream.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +143,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F0100B7619DB824C005BEC30 /* Converter */ = {
+			isa = PBXGroup;
+			children = (
+				F024965519BBFF0700ED5622 /* JJFAudioFileConverter.h */,
+				F024965619BBFF0700ED5622 /* JJFAudioFileConverter.m */,
+			);
+			name = Converter;
+			sourceTree = "<group>";
+		};
 		F044A28119AAE23100D272C6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,7 +273,9 @@
 		F09D103319749496006B9B31 /* Session/Playlist */ = {
 			isa = PBXGroup;
 			children = (
-				F0CA9CD71986AF630003C687 /* Manager */,
+				F0CA9CD71986AF630003C687 /* Controllers */,
+				F0100B7619DB824C005BEC30 /* Converter */,
+				F0CA9CD91986AF950003C687 /* Playlist */,
 				F0A6C3561993F19F00C28379 /* Player */,
 			);
 			name = Session/Playlist;
@@ -331,34 +339,6 @@
 			name = Player;
 			sourceTree = "<group>";
 		};
-		F0A6C35719940DA400C28379 /* Output */ = {
-			isa = PBXGroup;
-			children = (
-				F0CA9CDB1986B0D70003C687 /* JJFOutputStream.h */,
-				F0CA9CDC1986B0D70003C687 /* JJFOutputStream.m */,
-			);
-			name = Output;
-			sourceTree = "<group>";
-		};
-		F0A6C35819940DAA00C28379 /* Input */ = {
-			isa = PBXGroup;
-			children = (
-				F0CA9CDE1986B0E20003C687 /* JJFInputStream.h */,
-				F0CA9CDF1986B0E20003C687 /* JJFInputStream.m */,
-				F0A6C35919940DAF00C28379 /* File Writer */,
-			);
-			name = Input;
-			sourceTree = "<group>";
-		};
-		F0A6C35919940DAF00C28379 /* File Writer */ = {
-			isa = PBXGroup;
-			children = (
-				F044A25419AAE0E100D272C6 /* JJFAudioFileWriter.h */,
-				F044A25519AAE0E100D272C6 /* JJFAudioFileWriter.m */,
-			);
-			name = "File Writer";
-			sourceTree = "<group>";
-		};
 		F0CA9CD41986AF460003C687 /* Host */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,15 +368,15 @@
 			name = Entry;
 			sourceTree = "<group>";
 		};
-		F0CA9CD71986AF630003C687 /* Manager */ = {
+		F0CA9CD71986AF630003C687 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				F044A27619AAE14D00D272C6 /* JJFSessionManager.h */,
 				F044A27719AAE14D00D272C6 /* JJFSessionManager.m */,
-				F0CA9CDA1986B0A60003C687 /* Audio Streamer */,
-				F0CA9CD91986AF950003C687 /* Playlist */,
+				F02310FA19D26311006B30BB /* JJFSharingController.h */,
+				F02310FB19D26311006B30BB /* JJFSharingController.m */,
 			);
-			name = Manager;
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		F0CA9CD91986AF950003C687 /* Playlist */ = {
@@ -407,15 +387,6 @@
 				F0CA9CD61986AF5E0003C687 /* Entry */,
 			);
 			name = Playlist;
-			sourceTree = "<group>";
-		};
-		F0CA9CDA1986B0A60003C687 /* Audio Streamer */ = {
-			isa = PBXGroup;
-			children = (
-				F0A6C35719940DA400C28379 /* Output */,
-				F0A6C35819940DAA00C28379 /* Input */,
-			);
-			name = "Audio Streamer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -527,19 +498,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F024965719BBFF0700ED5622 /* JJFAudioFileConverter.m in Sources */,
 				F044A27419AAE14300D272C6 /* JJFSessionPeerTableViewController.m in Sources */,
 				F044A27E19AAE15D00D272C6 /* JJFPlaylistEntry.m in Sources */,
+				F02310FC19D26311006B30BB /* JJFSharingController.m in Sources */,
 				F044A25D19AAE11D00D272C6 /* JJFHomeViewController.m in Sources */,
 				F044A26219AAE12700D272C6 /* JJFCreateViewController.m in Sources */,
-				F0CA9CE01986B0E20003C687 /* JJFInputStream.m in Sources */,
 				F044A26F19AAE13D00D272C6 /* JJFSessionHostTableViewController.m in Sources */,
 				F044A27B19AAE15300D272C6 /* JJFSharedPlaylist.m in Sources */,
 				F08453A8199BF8DF00799D7F /* JJFPlaylistCell.m in Sources */,
 				F044A27819AAE14D00D272C6 /* JJFSessionManager.m in Sources */,
-				F044A25619AAE0E100D272C6 /* JJFAudioFileWriter.m in Sources */,
 				F044A26719AAE12F00D272C6 /* JJFJoinViewController.m in Sources */,
 				F09D0FDE19749338006B9B31 /* main.m in Sources */,
-				F0CA9CDD1986B0D70003C687 /* JJFOutputStream.m in Sources */,
 				F021AC1A198C6F1100697CE0 /* JJFPlaylistPlayer.m in Sources */,
 				F044A26B19AAE13600D272C6 /* JJFMediaPickerController.m in Sources */,
 				F044A25919AAE10E00D272C6 /* JJFAppDelegate.m in Sources */,

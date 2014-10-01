@@ -9,16 +9,17 @@
 #import "JJFSessionPeerTableViewController.h"
 #import "JJFOutputStream.h"
 #import "JJFPlaylistCell.h"
+#import "JJFAudioFileConverter.h"
+#import "JJFSharingController.h"
 
 @interface JJFSessionPeerTableViewController ()
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *playlistLabel;
-@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (nonatomic, weak) IBOutlet UILabel *playlistLabel;
+@property (nonatomic, weak) IBOutlet UIView *headerView;
 
-//@property (strong, nonatomic) JJFOutputStream *outputStream;
-
-@property (weak, nonatomic) JJFSessionManager *sessionManager;
+@property (nonatomic, weak) JJFSessionManager *sessionManager;
+@property (nonatomic, strong) JJFSharingController *sharingController;
 
 @end
 
@@ -42,6 +43,8 @@
     [self.headerView.layer setZPosition:2.0];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.sharingController = [[JJFSharingController alloc] init];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -103,12 +106,12 @@
 #pragma mark - Scroll View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat relativeScrollOffset = scrollView.contentOffset.y / self.tableView.frame.size.height;
-    
+    CGFloat relativeScrollOffset = scrollView.contentOffset.y / MAX(self.tableView.contentSize.height,
+                                                                    self.tableView.frame.size.height);
     NSLog(@"ScrollViewOffset %f", relativeScrollOffset);
 
     CGFloat backgroundOffset = relativeScrollOffset * self.tableView.rowHeight;
-    for (int i = 0; i <self.sessionManager.sharedPlaylist.playlist.count; i++) {
+    for (int i = 0; i <self.sharingController.sharedPlaylist.playlist.count; i++) {
         JJFPlaylistCell *cell = (JJFPlaylistCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
         CGRect frame = CGRectMake(cell.backgroundView.frame.origin.x,
                                   backgroundOffset,
@@ -139,21 +142,29 @@
 
 - (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection
 {
-    
     [self dismissViewControllerAnimated:YES completion:nil];
     
     MPMediaItem *song = [[mediaItemCollection items] firstObject];
     
     JJFPlaylistEntry *entry = [[JJFPlaylistEntry alloc] initWithMediaItem:song andPeerID:self.sessionManager.peerID];
+
     
-    if (![entry.songURL.pathExtension isEqualToString:@"mp3"])
-    { UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Song Format" message:@"Song must not be DRM protected" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    return;}
+    // Check to make sure it is a valid file, not iCloud Media
+        NSURL *songURL = [entry songURL];
+
+        if (!songURL)
+        {
+            NSLog(@"URL is %@, probably iCloud media", songURL);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Can't Add Song" message:@"Song cannot be iCloud Media" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+            
+            return;
+        }
     
-    [self.sessionManager handleEntry:entry];
+    // Send entry to sharing controller for handling
+    [self.sharingController handleEntry:entry];
     
-    NSInteger lastRow = [self.sessionManager.sharedPlaylist.playlist indexOfObject:entry];
+    NSInteger lastRow = [self.sharingController.sharedPlaylist.playlist indexOfObject:entry];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
     
@@ -166,7 +177,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSUInteger count = [[self.sessionManager.sharedPlaylist playlist] count];
+    NSUInteger count = [[self.sharingController.sharedPlaylist playlist] count];
     NSLog(@"Playlist count: %lu", count);
     return count;
 }
@@ -180,6 +191,15 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
+//Image Scaling Function
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -187,22 +207,24 @@
     
     NSLog(@"Cell for row at index: %@", indexPath);
     
-    JJFPlaylistEntry *item = [self.sessionManager.sharedPlaylist.playlist objectAtIndex:indexPath.row];
+    JJFPlaylistEntry *item = [self.sharingController.sharedPlaylist.playlist objectAtIndex:indexPath.row];
     
     UIColor *deepTurquoise = [UIColor colorWithRed:55.0/255.0 green:85.0/255.0 blue:99.0/255.0 alpha:1.0];
     
-    NSMutableAttributedString *artistString = [[NSMutableAttributedString alloc] initWithString:item.artistName];
+    UIImage *backgroundImage = [self imageWithImage:item.albumImage scaledToSize:CGSizeMake(320.0, 320.0)];
+    UIImageView *backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
+    cell.backgroundView = backgroundView;
+    [cell.backgroundView setContentMode:UIViewContentModeCenter];
     
-    [artistString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, artistString.length)];
     
     NSMutableAttributedString *songString = [[NSMutableAttributedString alloc] initWithString:item.songTitle];
-    
     [songString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, songString.length)];
-    
-    cell.artistLabel.attributedText = artistString;
-    cell.backgroundView = [[UIImageView alloc] initWithImage:item.albumImage];
-    [cell.backgroundView setContentMode:UIViewContentModeCenter];
     cell.songLabel.attributedText = songString;
+    
+    
+    NSMutableAttributedString *artistString = [[NSMutableAttributedString alloc] initWithString:item.artistName];
+    [artistString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, artistString.length)];
+    cell.artistLabel.attributedText = artistString;
     
     if (item.isStreaming)
     {

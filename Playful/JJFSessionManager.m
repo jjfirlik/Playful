@@ -11,14 +11,13 @@
 #import "JJFJoinViewController.h"
 #import "JJFOutputStream.h"
 #import "JJFInputStream.h"
+#import "JJFAudioFileConverter.h"
 
 @interface JJFSessionManager ()
 
 @property (nonatomic, strong) MCNearbyServiceAdvertiser *advertiser;
 @property (nonatomic, strong) MCNearbyServiceBrowser *browser;
-@property (nonatomic, strong) MCSession *session;
 
-@property (nonatomic, strong) MCPeerID *host;
 @property (nonatomic, strong) NSMutableArray *peersFound;
 
 @property (strong, nonatomic) JJFInputStream *inputStream;
@@ -31,10 +30,11 @@
 + (instancetype)sharedManager
 {
     static JJFSessionManager *sharedManager = nil;
+    static dispatch_once_t once;
     
-    if (!sharedManager) {
+    dispatch_once(&once, ^{
         sharedManager = [[self alloc] initPrivate];
-    }
+    });
     
     return sharedManager;
 }
@@ -49,9 +49,6 @@
         self.session = nil;
         self.peerID = nil;
         self.peersFound = nil;
-        
-        self.sharedPlaylist = [[JJFSharedPlaylist alloc] init];
-
     }
     return self;
 }
@@ -80,8 +77,6 @@
     self.host = peerID;
     
     NSDictionary *dict = @{@"peerID": peerID};
-    
-    NSLog(@"%@'s advertiser was invited to %@'s session", self.peerID.displayName, peerID.displayName);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedInvitation" object:self userInfo:dict];
     
@@ -154,7 +149,7 @@
     return [[self.session connectedPeers] count];
 }
 
-#pragma mark - Session Lifecycle
+#pragma mark - Session
 
 
 - (void)setupSessionWithDisplayName:(NSString *)displayName
@@ -194,24 +189,25 @@
 
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
 {
+    NSDictionary *dict = @{@"peer": peerID};
+
     if (state != MCSessionStateConnecting) {
         if (state == MCSessionStateConnected) {
             NSLog(@"peer %@ joined session", peerID.displayName);
             
-            if ([self isHost])
-            [self sendUpdatedPlaylist];
+            if ([self isHost]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"peerJoinedSession" object:self
+                userInfo:dict];
+            }
+            
         }
-        else if (state == MCSessionStateNotConnected){
+        
+        else if (state == MCSessionStateNotConnected) {
             NSLog(@"peer %@ left session", peerID.displayName);
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"peerLeftSession" object:self
+                                                              userInfo:dict];
         }
     }
-    
-    NSNumber *stateNumber = [NSNumber numberWithInt:state];
-    
-    NSDictionary *dict = @{@"peerID": peerID,
-                           @"state": stateNumber};
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"peerChangedState" object:self userInfo:dict];
 }
 
 // Handle SharedPlaylist Data Sharing
@@ -220,35 +216,24 @@
     NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 
     // Peer receives entire playlist from host
-    if ([[dict objectForKey:@"type"] isEqualToString:@"playlist"])
-    {
-        NSArray *playlistArray = [dict objectForKey:@"playlist"];
-        [self.sharedPlaylist setPlaylist:playlistArray];
-        NSLog(@"RECEIVED ENTIRE PLAYLIST");
+    if ([[dict objectForKey:@"type"] isEqualToString:@"playlist"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedPlaylistFromHost" object:self userInfo:dict];
+
     }
     
     // Host receives single entry, then sends entire playlist
-    if ([[dict objectForKey:@"type"] isEqualToString:@"entry"])
-    {
-        JJFPlaylistEntry *entry = [dict objectForKey:@"entry"];
-        [self.sharedPlaylist addEntry:entry];
-        [self sendUpdatedPlaylist];
-        NSLog(@"RECEIVED SINGLE ENTRY");
+    // (Maintains synchronization between all peers in case of lag)
+    if ([[dict objectForKey:@"type"] isEqualToString:@"entry"]) {
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedEntryFromPeer" object:self userInfo:dict];
+        
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"receivedData" object:self];
 }
 
 // Handle I/O streams
 - (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID
 {
-    
-    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:streamName];
-    JJFPlaylistEntry *entry = [self.sharedPlaylist entryForUUID:uuid];
-
-    [self handleInputStream:stream fromPeer:peerID withEntry:entry];
-    
-    NSLog(@"%@ did receive stream", self.peerID.displayName);
     
 }
 
@@ -257,125 +242,30 @@
     certificateHandler(YES);
 }
 
+// Handle Resources
 - (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress
-{}
+{
+    NSDictionary *dict = @{@"resourceName":resourceName,
+                           @"peer":peerID,
+                           @"progress":progress};
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"startedReceivingResource" object:self.session userInfo:dict];
+}
 
 - (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error
-{}
-
-
-#pragma mark - Stream Handling
-- (void)handleInputStream:(NSInputStream *)stream fromPeer:(MCPeerID *)peerID withEntry:(JJFPlaylistEntry *)entry
 {
-    self.inputStream = [[JJFInputStream alloc] initWithInputStream:stream andEntry:entry];
-    self.inputStream.delegate = self;
-    [self.inputStream start];
-}
-
-- (JJFOutputStream *)outputStreamForPeer:(MCPeerID *)peer withEntry:(JJFPlaylistEntry *)entry
-{
-    NSError *error;
-    
-    NSOutputStream *stream = [self.session startStreamWithName:entry.uuid.UUIDString toPeer:peer error:&error];
-    JJFOutputStream *outputStream = [[JJFOutputStream alloc] initWithOutputStream:stream andEntry:entry];
-    
-    if (error) {
-        NSLog(@"Error: %@", [error userInfo].description);
-    }
-    
-    return outputStream;
-    
-}
-
-- (void)streamSongWithEntry:(JJFPlaylistEntry *)entry
-{
-    NSURL *songURL = [entry songURL];
-    
-    if (!songURL)
+    if (error)
     {
-        NSLog(@"Not a valid URL, can't be iCloud media");
+        //Handle the error
         return;
     }
     
-    [self sendEntry:entry];
+    NSDictionary *dict = @{@"resourceName":resourceName,
+                           @"peer":peerID,
+                           @"URL":localURL};
     
-    self.outputStream = [self outputStreamForPeer:self.host withEntry:entry];
-    
-    [self.outputStream streamAudioFromURL:songURL];
-    [self.outputStream start];
-    
-    NSString *songName = [entry songTitle];
-    NSString *hostName = [self.host displayName];
-    
-    NSLog(@"Sending %@ to %@", songName, hostName);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"finishedReceivingResource" object:self.session userInfo:dict];
 }
-
-- (void)inputStreamEndedForEntry:(JJFPlaylistEntry *)entry
-{
-    entry.isStreaming = NO;
-        
-    [self sendUpdatedPlaylist];
-    
-}
-
-#pragma mark - Playlist Functions
-
-- (void)handleEntry:(JJFPlaylistEntry *)entry
-{
-    //If host, add song immediately to playlist & queue, send playlist
-    if ([self isHost])
-    {
-        [self.sharedPlaylist addEntry:entry];
-        [self sendUpdatedPlaylist];
-        
-        NSDictionary *dict = @{@"entry": entry};
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"entryReadyForQueue" object:self userInfo:dict];
-    }
-    
-    
-    //If peer, send entry then stream song
-    else
-    {
-        entry.isStreaming = YES;
-        [self.sharedPlaylist addEntry:entry];
-        [self streamSongWithEntry:entry];
-        
-    }
-}
-
-- (void)removeTop
-{
-    [self.sharedPlaylist removeTop];
-    [self sendUpdatedPlaylist];
-}
-
-- (void)sendUpdatedPlaylist
-{
-    
-    NSDictionary *dict = @{@"type": @"playlist",
-                           @"playlist": self.sharedPlaylist.playlist};
-    
-    NSData *playlistData = [NSKeyedArchiver archivedDataWithRootObject:dict];
-    
-    NSArray *allPeers = [self.session connectedPeers];
-    
-    [self.session sendData:playlistData toPeers:allPeers withMode:MCSessionSendDataReliable error:nil];
-    
-}
-
-- (void)sendEntry:(JJFPlaylistEntry *)entry
-{
-    NSDictionary *dict = @{@"type": @"entry",
-                           @"entry": entry};
-    
-    NSData *entryData = [NSKeyedArchiver archivedDataWithRootObject:dict];
-    
-    NSArray *hostArray = [NSArray arrayWithObject:self.host];
-    
-    [self.session sendData:entryData toPeers:hostArray withMode:MCSessionSendDataReliable error:nil];
-}
-
-
 
 
 @end

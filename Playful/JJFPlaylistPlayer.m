@@ -11,14 +11,13 @@
 
 @interface JJFPlaylistPlayer ()
 
-@property (weak, nonatomic) JJFSharedPlaylist *playlist;
 @property (strong, nonatomic) AVQueuePlayer *player;
 
 @end
 
 @implementation JJFPlaylistPlayer
 
-- (instancetype)initWithPlaylist:(JJFSharedPlaylist *)playlist
+- (instancetype)init
 {
     self = [super init];
     
@@ -30,34 +29,11 @@
     return self;
 }
 
-- (instancetype)init
-{
-    return [self initWithPlaylist:nil];
-}
-
-- (JJFSharedPlaylist *)playlist
-{
-    return [[JJFSessionManager sharedManager] sharedPlaylist];
-}
-
-- (void)setupQueue
-{
-    NSArray *playlistArray = [self.playlist playlist];
-    NSMutableArray *playlistItems = [NSMutableArray array];
-    
-    for (JJFPlaylistEntry *item in playlistArray)
-    {
-        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:[item songURL]];
-        NSLog(@"Adding %@", item.songURL);
-        [playlistItems addObject:playerItem];
-    }
-    
-    self.player = [[AVQueuePlayer alloc] initWithItems:playlistItems];
-}
-
 - (void)addEntry:(JJFPlaylistEntry *)entry
 {
     NSURL *songURL = [entry songURL];
+    
+    NSLog(@"Added Playlist Item at %@", songURL);
     
     AVPlayerItem *item = [AVPlayerItem playerItemWithURL:songURL];
     

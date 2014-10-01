@@ -83,9 +83,16 @@
     
     self.assetReader = [AVAssetReader assetReaderWithAsset:asset error:&assetError];
     
-    //NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey, nil];
+    NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
+                              [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
+                              [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
+                              [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,
+                              [NSNumber numberWithBool:NO], AVLinearPCMIsFloatKey,
+                              [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
+                              nil];
 
-    self.assetOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:asset.tracks[0] outputSettings:nil];
+    self.assetOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:asset.tracks[0] outputSettings:settings];
 
     
     if (![self.assetReader canAddOutput:self.assetOutput]) return;

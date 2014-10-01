@@ -10,6 +10,7 @@
                 <outlet property="connectButton" destination="MMQ-EK-LNF" id="Yue-9I-E4Q"/>
                 <outlet property="peerCountLabel" destination="9p5-IC-Ugf" id="f02-uT-TsL"/>
                 <outlet property="peerNameTextView" destination="BZd-8L-4qS" id="5Zx-1Q-CWV"/>
+                <outlet property="tapAnywhere" destination="9xn-jg-OYv" id="ge0-tI-b0l"/>
                 <outlet property="view" destination="iGD-0S-EI6" id="ICh-PB-xNU"/>
             </connections>
         </placeholder>

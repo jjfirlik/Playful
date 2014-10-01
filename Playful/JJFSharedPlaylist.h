@@ -20,6 +20,7 @@
 
 - (void)updateLocalURL:(NSURL *)url forEntry:(JJFPlaylistEntry *)entry;
 
+- (JJFPlaylistEntry *)entryForUUIDString:(NSString *)uuidString;
 - (JJFPlaylistEntry *)entryForUUID:(NSUUID *)uuid;
 
 @end

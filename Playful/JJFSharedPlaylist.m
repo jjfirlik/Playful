@@ -80,19 +80,22 @@
 
 - (void)updateLocalURL:(NSURL *)url forEntry:(JJFPlaylistEntry *)entry
 {
-    JJFPlaylistEntry *localEntry = [self.privatePlaylist objectAtIndex:[self.privatePlaylist indexOfObjectIdenticalTo:entry]];
+    JJFPlaylistEntry *localEntry = [self entryForUUID:entry.uuid];
     localEntry.songURL = url;
-    
-    NSLog(@"%@\n%@",localEntry.songTitle, localEntry.songURL);
 }
 
 - (JJFPlaylistEntry *)entryForUUID:(NSUUID *)uuid
+{
+    return [self entryForUUIDString:uuid.UUIDString];
+}
+
+- (JJFPlaylistEntry *)entryForUUIDString:(NSString *)uuidString
 {
     JJFPlaylistEntry *entry;
     
     for (JJFPlaylistEntry *item in self.privatePlaylist)
     {
-        if ([item.uuid isEqual:uuid])
+        if ([item.uuid.UUIDString isEqual:uuidString])
             entry = item;
     }
     

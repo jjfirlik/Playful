@@ -16,16 +16,14 @@
 
 + (instancetype)sharedManager;
 
-@property (nonatomic, strong) JJFSharedPlaylist *sharedPlaylist;
+@property (nonatomic, strong) MCPeerID *host;
+- (BOOL)isHost;
 
 @property (nonatomic, strong) NSString *displayName;
 @property (nonatomic, strong) MCPeerID *peerID;
 @property (nonatomic, assign) NSInteger peerCount;
 
-
-- (void)setupSessionWithDisplayName:(NSString *)displayName;
-- (void)setupSession;
-- (void)resetSession;
+@property (nonatomic, strong) MCSession *session;
 
 - (void)browseForPeers:(BOOL)shouldBrowse;
 - (void)addPeer:(MCPeerID *)peer;
@@ -34,11 +32,9 @@
 
 - (void)advertiseSelf:(BOOL)shouldAdvertise;
 
-- (JJFOutputStream *)outputStreamForPeer:(MCPeerID *)peer withEntry:(JJFPlaylistEntry *)entry;
+- (void)setupSessionWithDisplayName:(NSString *)displayName;
+- (void)setupSession;
+- (void)resetSession;
 
-#pragma mark - Playlist
-- (void)handleEntry:(JJFPlaylistEntry *)entry;
-- (void)removeTop;
-- (void)sendUpdatedPlaylist;
 
 @end

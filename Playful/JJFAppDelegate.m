@@ -73,6 +73,8 @@
         NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:path];
         [fileMgr removeItemAtPath:fullPath error:&error];
     }
+    
+    [[JJFSessionManager sharedManager] resetSession];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

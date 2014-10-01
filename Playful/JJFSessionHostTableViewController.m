@@ -10,11 +10,10 @@
 #import "JJFInputStream.h"
 #import "JJFPlaylistPlayer.h"
 #import "JJFPlaylistCell.h"
-
+#import "JJFSharingController.h"
 @interface JJFSessionHostTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) JJFInputStream *inputStream;
 
 @property (weak, nonatomic) IBOutlet UILabel *playlistLabel;
 @property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
@@ -24,14 +23,22 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
-@property (strong, nonatomic) JJFPlaylistPlayer *player;
 @property (weak, nonatomic) JJFSessionManager *sessionManager;
-
-@property (strong, nonatomic) NSMutableArray *entriesDoneStreaming;
+@property (strong, nonatomic) JJFPlaylistPlayer *player;
+@property (nonatomic, strong) JJFSharingController *sharingController;
 
 @end
 
 @implementation JJFSessionHostTableViewController
+
+#pragma mark - Getters and Setters
+
+- (JJFSessionManager *)sessionManager
+{
+    return [JJFSessionManager sharedManager];
+}
+
+#pragma mark - ViewController Lifecycle
 
 - (void)viewDidLoad
 {
@@ -52,10 +59,8 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    self.inputStream = [[JJFInputStream alloc] initWithInputStream:nil];
-    self.entriesDoneStreaming = [NSMutableArray array];
-    
     self.player = [[JJFPlaylistPlayer alloc] init];
+    self.sharingController = [[JJFSharingController alloc] init];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -72,7 +77,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableWithNotification:) name:@"receivedData" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addEntryToQueueWithNotification:) name:@"entryReadyForQueue" object:nil];
-    
+        
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(songFinishedPlayingWithNotification:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     
     NSLog(@"color is %@", self.playlistLabel.textColor);
@@ -99,42 +104,6 @@
     
 }
 
-- (JJFSessionManager *)sessionManager
-{
-    return [JJFSessionManager sharedManager];
-}
-
-- (void)updateTableWithNotification:(NSNotification *)note
-{
-    [self performSelectorOnMainThread:@selector(updateTable) withObject:nil waitUntilDone:NO];
-}
-
-- (void)updateTable
-{
-    [self.tableView reloadData];
-}
-
-- (void)updateCellWithEntry:(JJFPlaylistEntry *)entry
-{
-    NSInteger index = [self.sessionManager.sharedPlaylist.playlist indexOfObject:entry];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    
-    JJFPlaylistCell *cell = (JJFPlaylistCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    
-    [cell.activityIndicator stopAnimating];
-}
-
-/*- (BOOL)prefersStatusBarHidden {
-    return YES;
-}*/
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Playlist Player Logic
 
 - (void)addEntryToQueueWithNotification:(NSNotification *)note
@@ -145,24 +114,23 @@
     
     entry.isStreaming = NO;
     
-    [self performSelectorOnMainThread:@selector(addEntryToQueue:) withObject:entry waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(addEntryToQueue:) withObject:entry waitUntilDone:NO];
     
-    [self updateCellWithEntry:entry];
+    [self performSelectorOnMainThread:@selector(updateCellWithEntry:) withObject:entry waitUntilDone:NO];
     
-    [self.sessionManager sendUpdatedPlaylist];
+    [self.sharingController sendUpdatedPlaylist];
 }
 
 - (void)addEntryToQueue:(JJFPlaylistEntry *)entry
 {
     [self.player addEntry:entry];
-    
     if (![self.player isPlaying])
         [self.player play];
 }
 
 - (void)songFinishedPlayingWithNotification:(NSNotification *)note
 {
-    [self.sessionManager removeTop];
+    [self.sharingController removePlaylistTop];
     [self updateTable];
 }
 
@@ -170,13 +138,11 @@
 
 - (IBAction)addSong:(id)sender
 {
-    NSLog(@"Add da song");
     
     JJFMediaPickerController *mediaPicker = [[JJFMediaPickerController alloc] initWithMediaTypes:MPMediaTypeMusic];
     mediaPicker.delegate = self;
     
     [self presentViewController:mediaPicker animated:YES completion:nil];
-    
     
 }
 
@@ -194,9 +160,9 @@
     
     JJFPlaylistEntry *entry = [[JJFPlaylistEntry alloc] initWithMediaItem:song andPeerID:self.sessionManager.peerID];
     
-    [self.sessionManager handleEntry:entry];
+    [self.sharingController handleEntry:entry];
     
-    NSInteger lastRow = [self.sessionManager.sharedPlaylist.playlist indexOfObject:entry];
+    NSInteger lastRow = [self.sharingController.sharedPlaylist.playlist indexOfObject:entry];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
     
@@ -224,13 +190,13 @@
 - (IBAction)nextSong:(id)sender {
    
 
-    if ([self.sessionManager.sharedPlaylist.playlist count] == 0)
+    if ([self.sharingController.sharedPlaylist.playlist count] == 0)
     {
         return;
     }
     
     [self.player next];
-    [self.sessionManager removeTop];
+    [self.sharingController removePlaylistTop];
     
     [self updateTable];
     
@@ -239,12 +205,14 @@
 #pragma mark - Scroll View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat relativeScrollOffset = scrollView.contentOffset.y / self.tableView.frame.size.height;
+
+    CGFloat relativeScrollOffset = scrollView.contentOffset.y / MAX(self.tableView.contentSize.height,
+                                                                    self.tableView.frame.size.height);
 
     NSLog(@"ScrollViewOffset %f", relativeScrollOffset);
     
     CGFloat backgroundOffset = relativeScrollOffset * self.tableView.rowHeight;
-    for (int i = 0; i <self.sessionManager.sharedPlaylist.playlist.count; i++) {
+    for (int i = 0; i <self.sharingController.sharedPlaylist.playlist.count; i++) {
         JJFPlaylistCell *cell = (JJFPlaylistCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
         CGRect frame = CGRectMake(cell.backgroundView.frame.origin.x,
                                   backgroundOffset,
@@ -255,11 +223,44 @@
     }
 }
 
-#pragma mark - Table view Sata Source
+#pragma mark - Table view
+
+- (void)updateTableWithNotification:(NSNotification *)note
+{
+    [self performSelectorOnMainThread:@selector(updateTable) withObject:nil waitUntilDone:NO];
+}
+
+- (void)updateTable
+{
+    [self.tableView reloadData];
+}
+
+- (void)updateCellWithEntry:(JJFPlaylistEntry *)entry
+{
+    NSInteger index = [self.sharingController.sharedPlaylist.playlist indexOfObject:entry];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    
+    JJFPlaylistCell *cell = (JJFPlaylistCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    
+    [cell.activityIndicator stopAnimating];
+}
+
+/*- (BOOL)prefersStatusBarHidden {
+ return YES;
+ }*/
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table view Data Source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSUInteger count = [[self.sessionManager.sharedPlaylist playlist] count];
+    NSUInteger count = [[self.sharingController.sharedPlaylist playlist] count];
     NSLog(@"PLAYLIST COUNT %lu", count);
     return count;
 }
@@ -277,6 +278,16 @@
 
 }
 
+//Image Scaling Function
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -286,23 +297,25 @@
     
     NSLog(@"Cellforrow");
     
-    JJFPlaylistEntry *item = [self.sessionManager.sharedPlaylist.playlist objectAtIndex:indexPath.row];
+    JJFPlaylistEntry *item = [self.sharingController.sharedPlaylist.playlist objectAtIndex:indexPath.row];
     
     UIColor *deepTurquoise = [UIColor colorWithRed:55.0/255.0 green:85.0/255.0 blue:99.0/255.0 alpha:1.0];
     
-    NSMutableAttributedString *artistString = [[NSMutableAttributedString alloc] initWithString:item.artistName];
+    UIImage *backgroundImage = [self imageWithImage:item.albumImage scaledToSize:CGSizeMake(320.0, 320.0)];
+    UIImageView *backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
+    cell.backgroundView = backgroundView;
+    [cell.backgroundView setContentMode:UIViewContentModeCenter];
     
-    [artistString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, artistString.length)];
     
     NSMutableAttributedString *songString = [[NSMutableAttributedString alloc] initWithString:item.songTitle];
-    
     [songString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, songString.length)];
-    
-    cell.artistLabel.attributedText = artistString;
-    
-    cell.backgroundView = [[UIImageView alloc] initWithImage:item.albumImage];
-    [cell.backgroundView setContentMode:UIViewContentModeCenter];
     cell.songLabel.attributedText = songString;
+    
+    
+    NSMutableAttributedString *artistString = [[NSMutableAttributedString alloc] initWithString:item.artistName];
+    [artistString addAttribute:NSBackgroundColorAttributeName value:deepTurquoise range:NSMakeRange(0, artistString.length)];
+    cell.artistLabel.attributedText = artistString;
+
     
     //CGFloat width = [cell.artistLabel.text sizeWithAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:27.0]}].width;
     
